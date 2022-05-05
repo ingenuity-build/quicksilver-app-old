@@ -1,0 +1,319 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+@font-face {
+    font-family: "PaintDropRegular";
+    src: url("./assets/fonts/PaintDropsRegular-0WaJo.ttf");
+}
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+.center {
+  position: absolute;
+  top: 50%;
+  transform: translate(0, -50%);
+}
+
+.text text {
+  paint-order: stroke;
+  stroke: #a7a2a2;
+  stroke-width: 0.15px;
+  stroke-linecap: butt;
+  stroke-linejoin: miter;
+  font-size: 1rem;
+ }
+
+
+/* BLOB styles */
+
+.blobBody {
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background: #000;
+}
+
+.mainBlobLiquid {
+  position: relative;
+  background: #000;
+  height: 450px;
+  width: 450px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #000;
+  filter: blur(8px) contrast(18);
+  mix-blend-mode: screen;
+}
+.mainBlobLiquid > span {
+  position: absolute;
+}
+.mainBlobLiquid > span:nth-of-type(1) {
+  left: 50%;
+  width: 150px;
+  height: 150px;
+  animation: spin-3 8s ease-in-out infinite forwards;
+}
+.mainBlobLiquid > span:nth-of-type(1) span {
+  width: 30px;
+}
+.mainBlobLiquid > span:nth-of-type(2) {
+  left: 20%;
+  width: 150px;
+  height: 100px;
+  animation: spin-4 6s ease-in-out infinite;
+}
+.mainBlobLiquid > span:nth-of-type(2) span {
+  width: 21px;
+}
+.mainBlobLiquid > span:nth-of-type(3) {
+  left: 48%;
+  top: 48%;
+  width: 100px;
+  height: 100px;
+  animation: spin-5 3.5s ease-in-out infinite forwards;
+}
+.mainBlobLiquid > span:nth-of-type(3) span {
+  width: 25px;
+}
+.mainBlobLiquid > span:nth-of-type(4) {
+  left: 28%;
+  top: 48%;
+  width: 200px;
+  height: 200px;
+  animation: spin-2 4.5s ease-in-out infinite forwards;
+}
+.mainBlobLiquid > span:nth-of-type(4) span {
+  width: 20px;
+}
+.mainBlobLiquid > span:nth-of-type(5) {
+  left: 50%;
+  top: 25%;
+  width: 200px;
+  height: 200px;
+  animation: spin-6 3.5s ease-in-out infinite forwards;
+}
+.mainBlobLiquid > span:nth-of-type(5) span {
+  width: 20px;
+}
+.mainBlobLiquid > span > span {
+  position: absolute;
+  background: #fff;
+  right: 20px;
+  top: 20px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+}
+
+.mainBlobLiquid div {
+  position: relative;
+  width: 80px;
+  aspect-ratio: 1;
+  background: #fff;
+  border-radius: 50%;
+}
+.mainBlobLiquid  div > div {
+  position: absolute;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: transparent;
+}
+.mainBlobLiquid  div > div > span {
+  position: absolute;
+  aspect-ratio: 1;
+  background: #fff;
+  border-radius: 50%;
+}
+.mainBlobLiquid  div > div:nth-child(1) {
+  left: -5px;
+  width: 70px;
+  animation: spin-1 5s ease-in infinite forwards;
+}
+.mainBlobLiquid  div > div:nth-child(1) > span {
+  width: 50px;
+}
+.mainBlobLiquid  div > div:nth-child(2) {
+  left: 10px;
+  bottom: 0;
+  width: 80px;
+  animation: spin-2 3s ease-in 1.5s infinite forwards;
+}
+.mainBlobLiquid div > div:nth-child(2) > span {
+  width: 60px;
+}
+
+@keyframes spin-1 {
+  0% {
+    transform: rotate(90deg);
+  }
+  100% {
+    transform: rotate(450deg);
+  }
+}
+@keyframes spin-2 {
+  0% {
+    transform: rotate(-50deg);
+  }
+  100% {
+    transform: rotate(310deg);
+  }
+}
+@keyframes spin-3 {
+  0% {
+    transform: rotate(220deg);
+  }
+  100% {
+    transform: rotate(580deg);
+  }
+}
+@keyframes spin-4 {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+@keyframes spin-5 {
+  0% {
+    transform: rotate(-100deg);
+  }
+  100% {
+    transform: rotate(260deg);
+  }
+}
+@keyframes spin-6 {
+  0% {
+    transform: rotate(210deg);
+  }
+  100% {
+    transform: rotate(570deg);
+  }
+}
+
+
+
+/* liquid button */
+
+@keyframes fade-in {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes drop {
+    0% {
+        bottom: 0px;
+        opacity: 1;
+    }
+
+    80% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 1;
+        bottom: -200px;
+    }
+}
+
+@keyframes wave {
+    0% {
+        background-position: 0 160px;
+        background-size: 170px 300px;
+    }
+
+    100% {
+        background-position: 500px -18px;
+        background-size: 250px 150px;
+    }
+}
+
+
+
+.kuhl{
+    margin-top: 5px;
+    width: 88%;
+}
+
+.loader {
+    width: 120px;
+    height: 120px;
+    position: relative;
+    margin: auto;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    text-align: center;
+    line-height: 133px;
+    font-family: PaintDropRegular;
+    color: #ffffff;
+    font-size: 34px;
+    border-radius: 50%;
+}
+
+.loader span {
+    z-index: 3;
+}
+
+.loader-bg {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    border-radius:50%;
+    background: #bcbcbc;
+    z-index: 2;
+    animation: wave 1s ease-out forwards;
+}
+
+.drops {
+    -webkit-filter: url('#liquid');
+    filter: url('#liquid');
+    position:absolute;
+    top:0;
+    left:0;
+    bottom:7px;
+    right:0;
+    z-index: 1;
+    opacity: 0;
+    animation: fade-in .1s linear .4s forwards;
+}
+
+.drop1 , .drop2 {
+    width: 21px;
+    height: 24px;
+    border-radius: 50%;
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    background-color:#bcbcbc
+}
+
+.drop1 {
+    width: 90px;
+    height: 16px;
+    bottom: 2px;
+    border-radius: 0;
+}
+
+.drop2 {
+    animation: drop 1.3s cubic-bezier(1,.19,.66,.12) .5s infinite;
+}
