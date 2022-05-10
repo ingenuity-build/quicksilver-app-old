@@ -14,12 +14,6 @@ import Button from '@mui/material/Button';
 
 interface Props {}
 
-const UserProgress = {
-  fullName: `Alana Meier`,
-  totalTrainings: 4,
-  completedTrainings: 3,
-};
-
 const drawerWidth: number = 300;
 
 const Navbar: FC<Props> = (props) => {

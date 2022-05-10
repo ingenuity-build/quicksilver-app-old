@@ -22,20 +22,6 @@ interface Data {
     name: string;
 }
 
-function createData(
-    rank: number,
-    name: string,
-    voting_power: string,
-    commission: string,
-): Data {
-    return {
-        rank,
-        name,
-        voting_power,
-        commission,
-    };
-}
-
 function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
     if (b[orderBy] < a[orderBy]) {
         return -1;
@@ -228,27 +214,27 @@ const valListQuery = `
 `;
 
 export default function ValidatorsTable(props: StepperProps) {
-    let _asyncRequest: Promise<void>|null = null
+    //let _asyncRequest: Promise<void>|null = null
 
     const [order, setOrder] = React.useState<Order>('asc');
     const [orderBy, setOrderBy] = React.useState<keyof Data>('commission');
     const [selected, setSelected] = React.useState<readonly string[]>([]);
-    const [page, setPage] = React.useState(0);
-    const [dense, setDense] = React.useState(false);
-    const [rowsPerPage, setRowsPerPage] = React.useState(5);
+    // const [page, setPage] = React.useState(0);
+    // const [dense, setDense] = React.useState(false);
+    // const [rowsPerPage, setRowsPerPage] = React.useState(5);
     const [rows, setRows] = React.useState<Array<Data>>([]);
 
     React.useEffect(() => _loadValsAsync());
 
     const _loadValsAsync = () => {
         if (rows.length === 0) {
-            _asyncRequest = loadValData().then(
+            loadValData().then(
                 externalData => {
                     console.log(externalData)
-                    _asyncRequest = null;
-                   let vals: Array<Data> = externalData.data.validator_status.
-                   filter((line: Validator) => { return !line.jailed }).    // remove jailed validators
-                   map((line: Validator, index: number): Data => {          // map to Data objects
+                    //_asyncRequest = null;
+                   let vals: Array<Data> = externalData.data.validator_status
+                   .filter((line: Validator) => { return !line.jailed })     // remove jailed validators
+                   .map((line: Validator, index: number): Data => {          // map to Data objects
                     let moniker = "Unknown"
                     let commission = "Unknown"
                     console.log(line);
@@ -380,7 +366,7 @@ export default function ValidatorsTable(props: StepperProps) {
     const isSelected = (name: string) => selected.indexOf(name) !== -1;
 
     // Avoid a layout jump when reaching the last page with empty rows.
-    const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
+    //const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
 
     return (
         <Box sx={{ width: '100%' }}>
@@ -390,7 +376,7 @@ export default function ValidatorsTable(props: StepperProps) {
                     <Table
                         sx={{ minWidth: 750 }}
                         aria-labelledby="tableTitle"
-                        size={dense ? 'small' : 'medium'}
+                        //size={dense ? 'small' : 'medium'}
                     >
                         <EnhancedTableHead
                             numSelected={selected.length}
@@ -403,9 +389,9 @@ export default function ValidatorsTable(props: StepperProps) {
                         <TableBody>
                             {/* if you don't need to support IE11, you can replace the `stableSort` call with:
               rows.slice().sort(getComparator(order, orderBy)) */}
-                            { //stableSort(rows, getComparator(order, orderBy))
+                            { stableSort(rows, getComparator(order, orderBy))
                                 //.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                                rows.map((row, index) => {
+                                .map((row, index) => {
                                     const isItemSelected = isSelected(row.name);
                                     const labelId = `enhanced-table-checkbox-${index}`;
 
@@ -436,7 +422,7 @@ export default function ValidatorsTable(props: StepperProps) {
                                         </TableRow>
                                     );
                                 })}
-                            {emptyRows > 0 && (
+                            {/* {emptyRows > 0 && (
                                 <TableRow
                                     style={{
                                         height: (dense ? 33 : 53) * emptyRows,
@@ -444,7 +430,7 @@ export default function ValidatorsTable(props: StepperProps) {
                                 >
                                     <TableCell colSpan={6} />
                                 </TableRow>
-                            )}
+                            )} */}
                         </TableBody>
                     </Table>
                 </TableContainer>

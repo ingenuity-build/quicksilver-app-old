@@ -20,9 +20,9 @@ export default function StackingWindow() {
 
    // const [age, setAge] = React.useState('10');
 
-    const handleChange = (event: SelectChangeEvent) => {
+    //const handleChange = (event: SelectChangeEvent) => {
         //setAge(event.target.value as string);
-    };
+    //};
     return (
         <>
             <FormControl  sx={{ marginTop: "20px", minWidth:"400px", maxWidth:'500px'}} variant="outlined">

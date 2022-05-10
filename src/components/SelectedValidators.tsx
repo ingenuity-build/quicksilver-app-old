@@ -23,14 +23,14 @@ interface State {
 
 
 export default function SelectedValidators() {
-    const [values, setValues] = React.useState<State>({
-        allocate: 0,
-    });
+    // const [values, setValues] = React.useState<State>({
+    //     allocate: 0,
+    // });
 
-    const handleChange =
-        (prop: keyof State) => (event: React.ChangeEvent<HTMLInputElement>) => {
-            setValues({ ...values, [prop]: parseInt(event.target.value) });
-        };
+    // const handleChange =
+    //     (prop: keyof State) => (event: React.ChangeEvent<HTMLInputElement>) => {
+    //         setValues({ ...values, [prop]: parseInt(event.target.value) });
+    //     };
 
     const [value, setValue] = React.useState<number | string | Array<number | string>>(
         30,
@@ -52,6 +52,8 @@ export default function SelectedValidators() {
     const handleBlur = () => {
         if (value < 0) {
             setValue(0);
+            setValue2(0);
+            setValue3(0);
         } else if (value > 100) {
             setValue(100);
         }
