@@ -6,7 +6,6 @@ import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
 import StackingWindow from "./StackingWindow";
 import ReDelegateWindow from "./ReDelegateWindow";
-import DelegateWindow from "./DelegateWindow";
 import WalletWindow from "./WalletWindow";
 
 export default function TransferActionsWindow() {

@@ -1,14 +1,8 @@
 import * as React from 'react';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
-import ListItemText from '@mui/material/ListItemText';
-import ListItemAvatar from '@mui/material/ListItemAvatar';
-import Avatar from '@mui/material/Avatar';
 import ImageIcon from '@mui/icons-material/Image';
 import WorkIcon from '@mui/icons-material/Work';
-import BeachAccessIcon from '@mui/icons-material/BeachAccess';
-import FormControl from "@mui/material/FormControl";
-import {FormHelperText, InputAdornment, OutlinedInput} from "@mui/material";
 import Slider from '@mui/material/Slider';
 
 
@@ -18,7 +12,6 @@ import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 
 import MuiInput from '@mui/material/Input';
-import VolumeUp from '@mui/icons-material/VolumeUp';
 
 const Input = styled(MuiInput)`
   width: 42px;

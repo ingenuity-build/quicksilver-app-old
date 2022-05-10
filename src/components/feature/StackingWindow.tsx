@@ -1,13 +1,10 @@
 import FormControl from "@mui/material/FormControl";
-import {FormHelperText, InputAdornment, OutlinedInput} from "@mui/material";
+import {InputAdornment, OutlinedInput} from "@mui/material";
 import * as React from 'react';
-import MenuItem from '@mui/material/MenuItem';
-import Select, { SelectChangeEvent } from '@mui/material/Select';
-import Button from '@mui/material/Button';
-import AllInclusiveIcon from '@mui/icons-material/AllInclusive';
 import Box from '@mui/material/Box';
-import TradeInfo from "../TradeInfo";
 import SelectedValidators from "../SelectedValidators";
+import { SelectChangeEvent } from '@mui/material/Select';
+
 
 interface State {
     max:number
@@ -21,10 +18,10 @@ export default function StackingWindow() {
             setValues({ ...values, [prop]: parseInt(event.target.value) });
         };
 
-    const [age, setAge] = React.useState('10');
+   // const [age, setAge] = React.useState('10');
 
     const handleChange = (event: SelectChangeEvent) => {
-        setAge(event.target.value as string);
+        //setAge(event.target.value as string);
     };
     return (
         <>

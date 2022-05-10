@@ -1,30 +1,15 @@
 import List from "@mui/material/List";
 import * as React from 'react';
-import { styled } from '@mui/material/styles';
-import DeleteIcon from '@mui/icons-material/Delete';
-import ListItem from '@mui/material/ListItem';
 import ListItemAvatar from '@mui/material/ListItemAvatar';
-import IconButton from '@mui/material/IconButton';
 import ListItemText from '@mui/material/ListItemText';
 import Avatar from '@mui/material/Avatar';
 import FolderIcon from '@mui/icons-material/Folder';
 import ListItemIcon from '@mui/material/ListItemIcon';
-import InboxIcon from '@mui/icons-material/Inbox';
 import ListItemButton from '@mui/material/ListItemButton';
-import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
-function generate(element: React.ReactElement) {
-    return [0, 1, 2, 4, 5, 6 ].map((value) =>
-        React.cloneElement(element, {
-            key: value,
-        }),
-    );
-}
 
 export default function ChainsList() {
-    const [dense, setDense] = React.useState(false);
-    const [secondary, setSecondary] = React.useState(false);
     const [selectedIndex, setSelectedIndex] = React.useState(1);
 
     const handleListItemClick = (

@@ -2,7 +2,7 @@ import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 
-function PoolsPage() {
+function AirdropPage() {
     return (
         <Container maxWidth="lg">
             <Box
@@ -23,4 +23,4 @@ function PoolsPage() {
     );
 }
 
-export default PoolsPage;
+export default AirdropPage;

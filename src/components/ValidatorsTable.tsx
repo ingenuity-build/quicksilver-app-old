@@ -6,20 +6,14 @@ import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
-import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
 import TableSortLabel from '@mui/material/TableSortLabel';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Paper from '@mui/material/Paper';
 import Checkbox from '@mui/material/Checkbox';
-import IconButton from '@mui/material/IconButton';
-import Tooltip from '@mui/material/Tooltip';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Switch from '@mui/material/Switch';
-import DeleteIcon from '@mui/icons-material/Delete';
-import FilterListIcon from '@mui/icons-material/FilterList';
 import { visuallyHidden } from '@mui/utils';
+import { StepperProps } from '../types/helpers'
 
 interface Data {
     voting_power: string;
@@ -41,22 +35,6 @@ function createData(
         commission,
     };
 }
-
-const rows = [
-    createData(1,'Validator 1', '15,394,433 OSMO', '5%' ),
-    createData(2, 'Validator 2', '15,394,433 OSMO',  '5%'),
-    createData(3,'Validator 3', '15,394,433 OSMO',  '5%'),
-    createData(4,'Validator 4', '15,394,433 OSMO',  '5%',),
-    createData(5,'Validator 5', '15,394,433 OSMO',  '5%',),
-    createData(6,'Validator 6', '15,394,433 OSMO',  '5%',),
-    createData(7,'Validator 7', '15,394,433 OSMO',  '5%',),
-    createData(8,'Validator 8', '15,394,433 OSMO',  '5%',),
-    createData(9, 'Validator 9', '15,394,433 OSMO',  '5%',),
-    createData(10,'Validator 10', '15,394,433 OSMO', '5%',),
-    createData(11,'Validator 11', '15,394,433 OSMO', '5%',),
-    createData(12,'Validator 12', '15,394,433 OSMO', '5%',),
-    createData(13,'Validator 14', '15,394,433 OSMO', '5%',),
-];
 
 function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
     if (b[orderBy] < a[orderBy]) {
@@ -219,13 +197,137 @@ const EnhancedTableToolbar = (props: EnhancedTableToolbarProps) => {
     );
 };
 
-export default function ValidatorsTable() {
+
+const valListQuery = `
+  query ValidatorList {
+    validator_status(where: {jailed: {}}) {
+      validator {
+        validator_voting_powers {
+          voting_power
+        }
+        validator_info {
+          operator_address
+          validator {
+            validator_commissions {
+              commission
+            }
+            validator_descriptions {
+              avatar_url
+              details
+              identity
+              moniker
+              security_contact
+              website
+            }
+          }
+        }
+      }
+      jailed
+    }
+  }
+`;
+
+export default function ValidatorsTable(props: StepperProps) {
+    let _asyncRequest: Promise<void>|null = null
+
     const [order, setOrder] = React.useState<Order>('asc');
     const [orderBy, setOrderBy] = React.useState<keyof Data>('commission');
     const [selected, setSelected] = React.useState<readonly string[]>([]);
     const [page, setPage] = React.useState(0);
     const [dense, setDense] = React.useState(false);
     const [rowsPerPage, setRowsPerPage] = React.useState(5);
+    const [rows, setRows] = React.useState<Array<Data>>([]);
+
+    React.useEffect(() => _loadValsAsync());
+
+    const _loadValsAsync = () => {
+        if (rows.length === 0) {
+            _asyncRequest = loadValData().then(
+                externalData => {
+                    console.log(externalData)
+                    _asyncRequest = null;
+                   let vals: Array<Data> = externalData.data.validator_status.
+                   filter((line: Validator) => { return !line.jailed }).    // remove jailed validators
+                   map((line: Validator, index: number): Data => {          // map to Data objects
+                    let moniker = "Unknown"
+                    let commission = "Unknown"
+                    console.log(line);
+                    if (line.validator.validator_info.validator.validator_descriptions.length > 0) {
+                        moniker = line.validator.validator_info.validator.validator_descriptions[0].moniker
+                    }
+                    if (line.validator.validator_info.validator.validator_commissions.length > 0) {
+                        commission = (line.validator.validator_info.validator.validator_commissions[0].commission * 100) + "%"
+                    }
+
+                    
+                    return {
+                        rank: 0, 
+                        voting_power: "" + line.validator.validator_voting_powers[0].voting_power,
+                        name: moniker,
+                        commission: commission
+                      }});
+                    setRows(vals);
+                }
+            );
+        }
+    }
+    
+    const loadValData = async (): Promise<ValResponse> => {
+        // fetch me from api
+        //return [{rank: 1, name: 'Validator 1', voting_power: '15,394,433 OSMO', commission: '5%' },{rank: 2, name: 'Validator 2', voting_power: '15,394,433 OSMO', commission: '5%' }]
+    
+        const result = await fetch(
+            "http://seed." + props.chainId + ".quicksilver.zone:8080/v1/graphql",
+            {
+              method: "POST",
+              body: JSON.stringify({
+                query: valListQuery,
+                variables: {},
+                operationName: "ValidatorList"
+              })
+            }
+          );
+        
+          return await result.json()    
+    }
+
+    type ValResponse = {
+        data: {
+            validator_status: Array<Validator>
+        }
+    }
+
+    type VotingPowers = {
+        voting_power: number
+    }
+
+    type Commissions = {
+        commission: number
+    }
+
+    type Descriptions = {
+        avatar_url: string | null,
+        details: string | null,
+        identity: string | null,
+        moniker: string,
+        security_contact: string | null,
+        website: string | null
+    }
+
+    type Validator = {
+        validator: {
+            validator_voting_powers: Array<VotingPowers>
+            validator_info: {
+                operator_address: string,
+                validator: {
+                    validator_commissions: Array<Commissions>
+                    validator_descriptions: Array<Descriptions>
+                }
+            }
+        },
+        jailed: Boolean
+        
+    }
 
     const handleRequestSort = (
         event: React.MouseEvent<unknown>,
@@ -265,21 +367,20 @@ export default function ValidatorsTable() {
         setSelected(newSelected);
     };
 
-    const handleChangePage = (event: unknown, newPage: number) => {
-        setPage(newPage);
-    };
+    // const handleChangePage = (event: unknown, newPage: number) => {
+    //     setPage(newPage);
+    // };
 
-    const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setRowsPerPage(parseInt(event.target.value, 10));
-        setPage(0);
-    };
+    // const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
+    //     setRowsPerPage(parseInt(event.target.value, 10));
+    //     setPage(0);
+    // };
 
 
     const isSelected = (name: string) => selected.indexOf(name) !== -1;
 
     // Avoid a layout jump when reaching the last page with empty rows.
-    const emptyRows =
-        page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
+    const emptyRows = page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
 
     return (
         <Box sx={{ width: '100%' }}>
@@ -302,9 +403,9 @@ export default function ValidatorsTable() {
                         <TableBody>
                             {/* if you don't need to support IE11, you can replace the `stableSort` call with:
               rows.slice().sort(getComparator(order, orderBy)) */}
-                            {stableSort(rows, getComparator(order, orderBy))
+                            { //stableSort(rows, getComparator(order, orderBy))
                                 //.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                                .map((row, index) => {
+                                rows.map((row, index) => {
                                     const isItemSelected = isSelected(row.name);
                                     const labelId = `enhanced-table-checkbox-${index}`;
 

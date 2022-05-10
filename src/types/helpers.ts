@@ -8,3 +8,10 @@ export type Nullable<T> = T | null;
 export type Maybe<T> = Optional<Nullable<T>>;
 
 export type WithId = { id: string };
+
+
+export interface StepperProps {
+    callback?(val: any): void;
+    chainId?: string,
+    children?: ReactNode; // 👈️ for demo purposes
+}
