@@ -17,9 +17,9 @@ const Input = styled(MuiInput)`
   width: 42px;
 `;
 
-interface State {
-    allocate: number;
-}
+// interface State {
+//     allocate: number;
+// }
 
 
 export default function SelectedValidators() {
