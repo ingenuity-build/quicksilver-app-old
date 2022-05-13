@@ -1,4 +1,4 @@
-import { ChainInfo, Keplr } from "@keplr-wallet/types";
+import { ChainInfo } from "@keplr-wallet/types";
 import { getKeplrFromWindow } from '@keplr-wallet/stores';
 import { SigningStargateClient,  } from "@cosmjs/stargate"
 
@@ -96,7 +96,6 @@ const ChainInfos: ChainInfo[] = [
 ]
 
 export const initKeplr = async (fn: Function):Promise<void> => { 
-
     const keplr = await getKeplrFromWindow();
     if (keplr) {
         ChainInfos.forEach((val) => { 

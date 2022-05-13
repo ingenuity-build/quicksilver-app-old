@@ -57,7 +57,7 @@ export default function StakePage(props: QsPageProps) {
     }
 
     const handleSetChainId = async (newChainId: string): Promise<void> => {
-        if (chainId != newChainId) {
+        if (chainId !== newChainId) {
             setSelectedValidators([])
             setAllocation(new Map<string, number>())
             setChainId(newChainId);
@@ -132,7 +132,7 @@ export default function StakePage(props: QsPageProps) {
                              }
                          }}>
                     {steps.map((step, index) => (
-                        (index != 0 || (index == 0 && !props.wallets.has('quicktest-3'))) && ( // hide the connect dialog if we have a wallet for the current network.
+                        (index !== 0 || (index === 0 && !props.wallets.has('quicktest-3'))) && ( // hide the connect dialog if we have a wallet for the current network.
                         <Step key={step.label} sx={{
 
                         }}>

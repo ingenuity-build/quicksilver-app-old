@@ -11,7 +11,7 @@ import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
 import Logo from "../assets/Logo";
 import AccountBalance from "./AccountBalance";
-import { NavLink, Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { QsPageProps } from "../types/helpers"
 
 const pages = [{title: 'Stake', path: "/stake"}, {title: 'Pools', path: "/pools"}, {title: 'Governance', path: "/gov"}, {title: 'Airdrop', path: "/claims"}];
