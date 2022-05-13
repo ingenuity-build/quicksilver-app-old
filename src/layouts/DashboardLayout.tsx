@@ -1,11 +1,10 @@
-import { WithChildren } from '../types/helpers';
+import { QsPageProps } from '../types/helpers';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
-import Navbar from '../components/feature/Navbar';
 import TopNavbar from "../components/TopNavbar";
 
-function DashboardLayout({ children }: WithChildren) {
+function DashboardLayout(props: QsPageProps) {
     return (
         <Box sx={{
             display: `flex`,
@@ -23,13 +22,12 @@ function DashboardLayout({ children }: WithChildren) {
                 item
                 md="auto"
             >
-                <TopNavbar/>
+                <TopNavbar {...props} />
             </Grid>
             <Container sx={{ mt: 5 }} maxWidth="xl">
                 <Grid container>
                     <Grid item spacing={3} md>
-                        {children}
-                        <Navbar />
+                        {props.children}
                     </Grid>
                 </Grid>
             </Container>

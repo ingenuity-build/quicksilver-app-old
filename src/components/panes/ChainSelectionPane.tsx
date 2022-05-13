@@ -3,7 +3,7 @@ import Box from '@mui/material/Box';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
-import { StepperProps } from '../types/helpers'
+import { StepperProps } from '../../types/helpers'
 import Grid from "@mui/material/Grid";
 
 class Chain {
@@ -11,7 +11,7 @@ class Chain {
     name?: string;
 }
 
-function Chains(props: StepperProps) {
+function ChainSelectionPane(props: StepperProps) {
     //let _asyncRequest: Promise<void>|null = null
     const [chains, setChains] = React.useState<Array<Chain>>([]);
     const handleChange = (event: SelectChangeEvent) => {
@@ -61,4 +61,4 @@ function Chains(props: StepperProps) {
 }
 
 
-export default Chains
+export default ChainSelectionPane

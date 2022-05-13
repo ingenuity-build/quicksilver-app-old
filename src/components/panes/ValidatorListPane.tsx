@@ -13,13 +13,15 @@ import Typography from '@mui/material/Typography';
 import Paper from '@mui/material/Paper';
 import Checkbox from '@mui/material/Checkbox';
 import { visuallyHidden } from '@mui/utils';
-import { StepperProps } from '../types/helpers'
+import { StepperProps } from '../../types/helpers'
 
-interface Data {
+export interface Data {
     voting_power: string;
     rank: number;
     commission: string;
     name: string;
+    address: string;
+    logo: string;
 }
 
 function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
@@ -213,44 +215,45 @@ const valListQuery = `
   }
 `;
 
-export default function ValidatorsTable(props: StepperProps) {
+export default function ValidatorListPane(props: StepperProps) {
     //let _asyncRequest: Promise<void>|null = null
 
     const [order, setOrder] = React.useState<Order>('asc');
     const [orderBy, setOrderBy] = React.useState<keyof Data>('commission');
-    const [selected, setSelected] = React.useState<readonly string[]>([]);
-    // const [page, setPage] = React.useState(0);
-    // const [dense, setDense] = React.useState(false);
-    // const [rowsPerPage, setRowsPerPage] = React.useState(5);
+    const [selected, doSetSelected] = React.useState<string[]>([]);
     const [rows, setRows] = React.useState<Array<Data>>([]);
 
     React.useEffect(() => _loadValsAsync());
+
+    const setSelected = (vals: string[]): void => {
+        let datas = rows.filter((row) => { return (vals.indexOf(row.address) > -1)})
+        if (props.callback) { props.callback(datas); }
+        doSetSelected(vals);
+    }
 
     const _loadValsAsync = () => {
         if (rows.length === 0) {
             loadValData().then(
                 externalData => {
-                    console.log(externalData)
-                    //_asyncRequest = null;
                    let vals: Array<Data> = externalData.data.validator_status
-                   .filter((line: Validator) => { return !line.jailed })     // remove jailed validators
+                   .filter((line: Validator) => { return !line.jailed || line.validator.validator_info.validator.validator_commissions[0].commission > 0.8})     // remove jailed validators
                    .map((line: Validator, index: number): Data => {          // map to Data objects
                     let moniker = "Unknown"
                     let commission = "Unknown"
-                    console.log(line);
                     if (line.validator.validator_info.validator.validator_descriptions.length > 0) {
                         moniker = line.validator.validator_info.validator.validator_descriptions[0].moniker
                     }
                     if (line.validator.validator_info.validator.validator_commissions.length > 0) {
                         commission = (line.validator.validator_info.validator.validator_commissions[0].commission * 100) + "%"
                     }
-
-                    
+                                       
                     return {
                         rank: 0, 
                         voting_power: "" + line.validator.validator_voting_powers[0].voting_power,
                         name: moniker,
-                        commission: commission
+                        commission: commission,
+                        address : line.validator.validator_info.operator_address,
+                        logo: "",
                       }});
                     setRows(vals);
                 }
@@ -263,7 +266,7 @@ export default function ValidatorsTable(props: StepperProps) {
         //return [{rank: 1, name: 'Validator 1', voting_power: '15,394,433 OSMO', commission: '5%' },{rank: 2, name: 'Validator 2', voting_power: '15,394,433 OSMO', commission: '5%' }]
     
         const result = await fetch(
-            "http://seed." + props.chainId + ".quicksilver.zone:8080/v1/graphql",
+            "https://data." + props.chainId + ".quicksilver.zone/v1/graphql",
             {
               method: "POST",
               body: JSON.stringify({
@@ -326,7 +329,7 @@ export default function ValidatorsTable(props: StepperProps) {
 
     const handleSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>) => {
         if (event.target.checked) {
-            const newSelecteds = rows.map((n) => n.name);
+            const newSelecteds = rows.map((n) => n.address);
             setSelected(newSelecteds);
             return;
         }
@@ -335,7 +338,7 @@ export default function ValidatorsTable(props: StepperProps) {
 
     const handleClick = (event: React.MouseEvent<unknown>, name: string) => {
         const selectedIndex = selected.indexOf(name);
-        let newSelected: readonly string[] = [];
+        let newSelected: string[] = [];
 
         if (selectedIndex === -1) {
             newSelected = newSelected.concat(selected, name);
@@ -392,17 +395,17 @@ export default function ValidatorsTable(props: StepperProps) {
                             { stableSort(rows, getComparator(order, orderBy))
                                 //.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                                 .map((row, index) => {
-                                    const isItemSelected = isSelected(row.name);
+                                    const isItemSelected = isSelected(row.address);
                                     const labelId = `enhanced-table-checkbox-${index}`;
 
                                     return (
                                         <TableRow
                                             hover
-                                            onClick={(event) => handleClick(event, row.name)}
+                                            onClick={(event) => handleClick(event, row.address)}
                                             role="checkbox"
                                             aria-checked={isItemSelected}
                                             tabIndex={-1}
-                                            key={row.name}
+                                            key={row.address}
                                             selected={isItemSelected}
                                         >
                                             <TableCell padding="checkbox">

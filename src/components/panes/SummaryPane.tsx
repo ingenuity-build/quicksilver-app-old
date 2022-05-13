@@ -14,27 +14,43 @@ const Item = styled(Paper)(({ theme }) => ({
     color: theme.palette.text.secondary,
 }));
 
-export default function RedelagetInfo() {
+export default function SummaryPane() {
     return (
-        <Box sx={{ width: '100%' }}>
+        <Box sx={{ width: '100%' }} mt={3}>
             <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
                 <Grid item xs={6}>
-                    <Item>Fee</Item>
+                    <Item>Number of native tokens bonded</Item>
                 </Grid>
                 <Grid item xs={6}>
-                    <Item>0.34242424</Item>
+                    <Item>≈ 450 qTokens</Item>
                 </Grid>
                 <Grid item xs={6}>
-                    <Item>Balance</Item>
+                    <Item>Total qTokens received</Item>
                 </Grid>
                 <Grid item xs={6}>
-                    <Item>34534r34r</Item>
+                    <Item> 450 qTokens</Item>
                 </Grid>
                 <Grid item xs={6}>
-                    <Item>Balance after tx</Item>
+                    <Item>Redemption rate</Item>
                 </Grid>
                 <Grid item xs={6}>
-                    <Item>0.034535</Item>
+                    <Item>34.3</Item>
+                </Grid>
+                <Grid item xs={6}>
+                    <Item>Total APR
+                    </Item>
+                </Grid>
+                <Grid item xs={6}>
+                    <Item>≈3453 qAsset
+                    </Item>
+                </Grid>
+                <Grid item xs={6}>
+                    <Item>Reward fee
+                    </Item>
+                </Grid>
+                <Grid item xs={6}>
+                    <Item>10%
+                    </Item>
                 </Grid>
             </Grid>
         </Box>

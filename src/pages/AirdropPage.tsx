@@ -1,8 +1,8 @@
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
-
-function AirdropPage() {
+import { QsPageProps } from "../types/helpers"
+function AirdropPage(props: QsPageProps) {
     return (
         <Container maxWidth="lg">
             <Box

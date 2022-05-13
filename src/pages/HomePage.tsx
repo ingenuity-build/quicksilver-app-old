@@ -3,9 +3,11 @@ import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 
-import Logo from "../components/Logo";
+import Logo from "../assets/Logo";
 
-function HomePage() {
+import { QsPageProps } from "../types/helpers"
+
+function HomePage(props: QsPageProps) {
     return (
         <Container maxWidth="lg">
             <Box
