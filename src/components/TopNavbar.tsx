@@ -85,14 +85,14 @@ const TopNavbar = (props: QsPageProps) => {
                     </Box>
 
                     <Box sx={{ flexGrow: 0 }}>
-                        { props.wallets.has('quicktest-3') &&
-                            <AccountBalance wallet={props.wallets.get('quicktest-3')} balances={ props.balances }/>
-                            || 
+                        { props.wallets.has('quicktest-3') && (
+                            <AccountBalance wallet={props.wallets.get('quicktest-3')} balances={ props.balances?.get('quicktest-3')?.get('uqck') }/>
+                          ) || (
                             <Button
                                 sx={{ my: 2, color: '#565D6C', fontSize: '20px',  display: 'block' }} variant="outlined" onClick={() => props.walletModal()}>
                                 Connect Wallet
                             </Button>
-                        }
+                        )}
                     </Box>
                 </Toolbar>
             </Container>

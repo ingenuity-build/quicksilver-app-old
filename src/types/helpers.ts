@@ -19,14 +19,13 @@ export interface StepperProps {
     chainId?: string,
     validators: Array<Data>
     allocations: Map<string, number>
-    balances: Map<string, Array<Coin>>
+    balances: Map<string, Map<string, number>>
     children?: ReactNode;
 }
 
 export interface QsPageProps {
     walletModal(): void,
     wallets: Map<string, SigningStargateClient>,
-    balances: Map<string, Array<Coin>>
+    balances: Map<string, Map<string,number>>
     children?: ReactNode,
 }
-

@@ -109,10 +109,6 @@ export default function StakePage(props: QsPageProps) {
     };
     return (
         <>
-        { JSON.stringify(allocation) }<br />
-        { activeStep }<br />
-        { chainId }<br />
-        { JSON.stringify(selectedValidators) }<br />
         <Grid container mx={1} justifyContent={'center'} >
             <Box  sx={{ width:'100%', backgroundColor:'grey.200', padding: '16px', borderRadius:'14px' }}>
                 <Stepper activeStep={activeStep} orientation="vertical"
@@ -163,7 +159,7 @@ export default function StakePage(props: QsPageProps) {
                                </Box>
                                 <Box sx={{ mb: 2 }}>
                                     <div>
-                                        {activeStep !== 0 && 
+                                        {activeStep !== 0 &&
                                         <Button
                                             onClick={handleBack}
                                             sx={{ mt: 1, mr: 1, color:'white', backgroundColor: "#b6b6b6 !important" }}
@@ -171,7 +167,7 @@ export default function StakePage(props: QsPageProps) {
                                             Previous
                                         </Button>
                                         }
-                                        
+
                                         { !(activeStep === steps.length - 1) &&
                                         <Button
                                             variant="contained"

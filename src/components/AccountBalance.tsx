@@ -6,12 +6,14 @@ import { SigningStargateClient, Coin } from '@cosmjs/stargate';
 
 interface Props {
     wallet?: SigningStargateClient
-    balances: Map<string, Array<Coin>>
+    balances: number | undefined
 }
 
 const drawerWidth: number = 200;
 
 const AccountBalance: FC<Props> = (props) => {
+
+let balance = 0
 
 return (
   <>
@@ -22,7 +24,8 @@ return (
         }}
       >
         <Grid sx={{ padding: 3 }}>
-          { props.balances } QCK
+          { props.balances ? props.balances : 0 } QCK
+
         </Grid>
       </Box>
     </Box>
