@@ -13,15 +13,8 @@ import StakePage from "./pages/StakePage";
 import AirdropPage from "./pages/AirdropPage";
 import GovernancePage from "./pages/GovernancePage";
 
-import Button from '@mui/material/Button';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
-
 import { initKeplr } from "./types/chains"
-import { coin, Coin, SigningStargateClient } from "@cosmjs/stargate"
+import { SigningStargateClient } from "@cosmjs/stargate"
 import { getKeplrFromWindow } from '@keplr-wallet/stores';
 
 function App({ Component, pageProps, router }: any) {
@@ -29,7 +22,6 @@ function App({ Component, pageProps, router }: any) {
 
   const [wallets, setWallets] = React.useState<Map<string, SigningStargateClient>>(new Map<string, SigningStargateClient>());
   const [balances, setBalances] = React.useState<Map<string, Map<string, number>>>(new Map<string, Map<string, number>>());
-  const [walletModal, setWalletModal] = React.useState(false);
   const handleClickOpen = () => {
     connectKeplr();
   };
