@@ -29,18 +29,14 @@ function App({ Component, pageProps, router }: any) {
   const connectKeplr = async () => {
 
     initKeplr(async(key: string, val: SigningStargateClient) => {
-      console.log("init");
       setWallets(new Map<string, SigningStargateClient>(wallets.set(key, val)));
 
       let keplr = await getKeplrFromWindow();
-      console.log("me sir");
       let chainId = await val.getChainId()
       let pubkey = await keplr?.getKey(chainId)
       let bech32 = pubkey?.bech32Address
-      bech32 = "quick1kv4ez0rgrd679m6da96apnqxkcamh28cyphd64"
       if (bech32) {
         let roBalance = await val.getAllBalances(bech32)
-        console.log("balances", roBalance)
         roBalance.forEach((bal) => {
           // there must be an easier way to remove readonly property from the returned Coin type?
           let networkBalances = balances.get(chainId);

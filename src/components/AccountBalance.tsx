@@ -2,7 +2,7 @@ import { FC } from 'react';
 import Box from '@mui/material/Box';
 
 import Grid from '@mui/material/Grid';
-import { SigningStargateClient, Coin } from '@cosmjs/stargate';
+import { SigningStargateClient } from '@cosmjs/stargate';
 
 interface Props {
     wallet?: SigningStargateClient
@@ -12,8 +12,6 @@ interface Props {
 const drawerWidth: number = 200;
 
 const AccountBalance: FC<Props> = (props) => {
-
-let balance = 0
 
 return (
   <>
