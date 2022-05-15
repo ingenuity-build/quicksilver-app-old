@@ -10,13 +10,12 @@ import Container from '@mui/material/Container';
 import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
 import Logo from "../assets/Logo";
-import AccountBalance from "./AccountBalance";
-import { NavLink } from "react-router-dom";
-import { QsPageProps } from "../types/helpers"
+import { Link } from "react-router-dom";
+import { QsPageProps, format} from "../types/helpers"
 
-const pages = [{title: 'Stake', path: "/stake"}, {title: 'Pools', path: "/pools"}, {title: 'Governance', path: "/gov"}, {title: 'Airdrop', path: "/claims"}];
+const pages = [{title: 'Stake', path: "/stake"}, {title: 'Pools', path: "/"}, {title: 'Governance', path: "/"}, {title: 'Airdrop', path: "/"}];
 
-const TopNavbar = (props: QsPageProps) => {
+const Navbar = (props: QsPageProps) => {
     const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
 
     const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
@@ -28,12 +27,12 @@ const TopNavbar = (props: QsPageProps) => {
     };
 
     return (
-        <AppBar position="static" sx={{backgroundColor:"#efefef", boxShadow:'none'}}>
+        <AppBar position="static" sx={{backgroundColor:"#303030", boxShadow:'none'}}>
             <Container maxWidth="xl">
                 <Toolbar disableGutters>
 
                     <Box sx={{width:'150px'}}>
-                        <Logo />
+                        <Link to="/"><Logo /></Link>
                     </Box>
                     <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
                         <IconButton
@@ -66,7 +65,16 @@ const TopNavbar = (props: QsPageProps) => {
                         >
                             {pages.map((page) => (
                                 <MenuItem key={page.title} onClick={handleCloseNavMenu}>
-                                    <Typography textAlign="center"><NavLink to={page.path}>{page.title}</NavLink></Typography>
+                                    <Typography sx={{
+              mr: 2,
+              display: { xs: 'flex', md: 'none' },
+              flexGrow: 1,
+              fontFamily: 'monospace',
+              fontWeight: 700,
+              letterSpacing: '.3rem',
+              color: 'inherit',
+              textDecoration: 'none',
+            }} component="a" href={page.path}>{page.title}</Typography>
                                 </MenuItem>
                             ))}
                         </Menu>
@@ -79,17 +87,31 @@ const TopNavbar = (props: QsPageProps) => {
                                 onClick={handleCloseNavMenu}
                                 sx={{ my: 2, color: '#565D6C', fontSize: '20px',  display: 'block' }}
                             >
-                                <NavLink to={page.path}>{page.title}</NavLink>
-                            </Button>
+                                    <Link to={page.path} ><Typography component="span" sx={{
+  mr: 2,
+  display: { xs: 'none', md: 'flex' },
+  flexGrow: 1,
+  fontFamily: 'monospace',
+  fontWeight: 700,
+  fontSize: '1.1em',
+  color: '#d4d4d4',
+  borderRadius: '10px',
+  textDecoration: 'none',
+  textAlignments: 'center',
+}}>{page.title}</Typography></Link>
+                             </Button>
                         ))}
                     </Box>
 
                     <Box sx={{ flexGrow: 0 }}>
                         { (props.wallets.has('quicktest-3') && (
-                            <AccountBalance wallet={props.wallets.get('quicktest-3')} balances={ props.balances?.get('quicktest-3')?.get('uqck') }/>
+                                <Box sx={{ padding: 3, color: '#d4d4d4', fontSize: '20px', borderRadius: '10px', border: '1px #d4d4d4', display: 'block'}}>
+                                    <strong>Balance:</strong> { format((props.balances && props.balances.get('quicktest-3') && props.balances.get('quicktest-3')?.get('uqck')) ||  0.00, 'QCK') }
+                        
+                                </Box>
                           )) || (
                             <Button
-                                sx={{ my: 2, color: '#565D6C', fontSize: '20px',  display: 'block' }} variant="outlined" onClick={() => props.walletModal()}>
+                                sx={{ my: 2, color: '#d4d4d4', fontSize: '20px',  display: 'block' }} variant="outlined" onClick={() => props.walletModal()}>
                                 Connect Wallet
                             </Button>
                         )}
@@ -99,4 +121,4 @@ const TopNavbar = (props: QsPageProps) => {
         </AppBar>
     );
 };
-export default TopNavbar;
+export default Navbar;

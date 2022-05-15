@@ -37,65 +37,22 @@ function App({ Component, pageProps, router }: any) {
       let bech32 = pubkey?.bech32Address
       if (bech32) {
         let roBalance = await val.getAllBalances(bech32)
-        roBalance.forEach((bal) => {
-          // there must be an easier way to remove readonly property from the returned Coin type?
-          let networkBalances = balances.get(chainId);
-          if (!networkBalances) {
-            networkBalances = new Map<string, number>()
-          }
-          setBalances(new Map<string, Map<string, number>>(balances.set(chainId, new Map<string, number>(networkBalances.set(bal.denom, parseInt(bal.amount))))));
+        let networkBalances = new Map<string, number>()
 
+        roBalance.forEach((bal) => { // for each denom in the network, store the balance.
+          networkBalances.set(bal.denom, parseInt(bal.amount))
         })
-
-        console.log("balances", balances)
+        setBalances(new Map<string, Map<string, number>>(balances.set(chainId, networkBalances)));
       }
     });
   }
-
-
-  // const AlertDialog = () => {
-  //
-  //   const handleKeplr = async () => {
-  //       handleClose();
-  //       connectKeplr();
-  //   }
-  //
-  //   const handleClose = () => {
-  //       setWalletModal(false);
-  //   };
-  //
-  //   return (
-  //     <div>
-  //       <Dialog
-  //         open={walletModal}
-  //         onClose={handleClose}
-  //         aria-labelledby="alert-dialog-title"
-  //         aria-describedby="alert-dialog-description"
-  //       >
-  //         <DialogTitle id="alert-dialog-title">
-  //           {"Connect to wallet?"}
-  //         </DialogTitle>
-  //         <DialogContent>
-  //           <DialogContentText id="alert-dialog-description">
-  //             Connect https://app.quicksilver.zone to wallet?
-  //             <Button onClick={handleKeplr} variant='outlined' sx={{display: 'block', margin: '10px auto'}}>Keplr</Button>
-  //
-  //           </DialogContentText>
-  //         </DialogContent>
-  //         <DialogActions>
-  //         <Button onClick={handleClose} autoFocus>Close</Button>
-  //         </DialogActions>
-  //       </Dialog>
-  //     </div>
-  //   );
-  // }
 
   return (
       <>
       <ThemeConfig>
           <GlobalStyles />
       <Router>
-          <Layout wallets={wallets} walletModal={handleClickOpen} {...pageProps}>
+          <Layout wallets={wallets} walletModal={handleClickOpen} balances={balances} {...pageProps} >
               <div className="App" >
                   <Routes>
                       <Route path="/" element={<HomePage wallets={wallets} walletModal={handleClickOpen} balances={balances} />}/>

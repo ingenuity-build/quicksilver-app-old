@@ -2,7 +2,7 @@ import { QsPageProps } from '../types/helpers';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
-import TopNavbar from "../components/TopNavbar";
+import Navbar from "../components/Navbar";
 
 function DashboardLayout(props: QsPageProps) {
     return (
@@ -22,7 +22,7 @@ function DashboardLayout(props: QsPageProps) {
                 item
                 md="auto"
             >
-                <TopNavbar {...props} />
+                <Navbar {...props} />
             </Grid>
             <Container sx={{ mt: 5 }} maxWidth="xl">
                 <Grid container>

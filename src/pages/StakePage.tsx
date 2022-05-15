@@ -8,17 +8,17 @@ import Button from '@mui/material/Button';
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
 import Grid from "@mui/material/Grid";
-import ChainSelectionPane from "../components/panes/ChainSelectionPane";
-import ConnectWallet from "../components/panes/ConnectWalletPane";
 import InfoIcon from '@mui/icons-material/Info';
 import { styled } from '@mui/material/styles';
-
 import Tooltip, { TooltipProps, tooltipClasses } from '@mui/material/Tooltip';
-import ValidatorListPane from "../components/panes/ValidatorListPane";
-import SummaryPane from "../components/panes/SummaryPane";
+
+import ConnectWallet from "../components/panes/1_ConnectWalletPane";
+import ChainSelectionPane from "../components/panes/2_ChainSelectionPane";
+import ValidatorListPane from "../components/panes/3_ValidatorListPane";
+import AllocationPane from '../components/panes/4_AllocationPane';
+import SummaryPane from "../components/panes/5_SummaryPane";
 
 import { QsPageProps } from "../types/helpers"
-import AllocationPane from '../components/panes/AllocationPane';
 
 const CustomWidthTooltip = styled(({ className, ...props }: TooltipProps) => (
     <Tooltip {...props} classes={{ popper: className }} />
@@ -33,6 +33,7 @@ export default function StakePage(props: QsPageProps) {
     const [chainId, setChainId] = React.useState("");
     const [selectedValidators, setSelectedValidators] = React.useState([]);
     const [allocation, setAllocation] = React.useState(new Map<string, number>());
+    const [stakeAmount, setStakeAmount] = React.useState<number>(0);
 
     const isWalletConnected = (): boolean => {
         return true
@@ -88,7 +89,7 @@ export default function StakePage(props: QsPageProps) {
             label: 'Allocate Tokens',
             component: AllocationPane,
             validate: validateAllocation,
-            callback: setAllocation
+            callback: setAllocation,
         },
         {
             label: 'Summary',
@@ -155,7 +156,7 @@ export default function StakePage(props: QsPageProps) {
                             </StepLabel>
                             <StepContent>
                                <Box>
-                                   {React.createElement(step.component, {callback: step.callback, chainId: chainId, validators: selectedValidators, allocations: allocation, balances: props.balances})}
+                                   {React.createElement(step.component, {callback: step.callback, chainId: chainId, validators: selectedValidators, allocations: allocation, balances: props.balances, stakeAmount: stakeAmount, setStakeAmount: setStakeAmount})}
                                </Box>
                                 <Box sx={{ mb: 2 }}>
                                     <div>

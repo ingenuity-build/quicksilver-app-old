@@ -47,6 +47,7 @@ function ChainSelectionPane(props: StepperProps) {
                         labelId="demo-simple-select-label"
                         id="demo-simple-select"
                         value={props.chainId}
+                        defaultValue={props.chainId}
                         onChange={handleChange}
                     >
                        {chains.map(function(chain: Chain){
