@@ -1,6 +1,6 @@
 // material
 import { CssBaseline } from '@mui/material';
-import { ThemeProvider, createTheme, StyledEngineProvider } from '@mui/material/styles';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
 //
 import shape from './shape';
 import palette from './palette';

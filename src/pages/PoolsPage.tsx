@@ -1,9 +1,9 @@
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
-import { Button } from '@mui/material';
+import { QsPageProps } from "../types/helpers"
 
-function PoolsPage() {
+function PoolsPage(props: QsPageProps) {
     return (
         <Container maxWidth="lg">
             <Box
